@@ -1,0 +1,76 @@
+program 9:
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Age Calculator</title>
+  <style>
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    input[type="date"] {
+      padding: 5px;
+      border-radius: 5px;
+      border: none;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #3e8e41;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <form onsubmit="calculateAge(event)">
+    <label for="dob">Date of Birth:</label>
+    <input type="date" id="dob" required>
+
+    <button type="submit">Calculate Age</button>
+
+    <div class="result"></div>
+  </form>
+
+  <script>
+    function calculateAge(event) {
+      event.preventDefault();
+
+      let dob = new Date(document.getElementById("dob").value);
+      let today = new Date();
+      let age = today.getFullYear() - dob.getFullYear();
+      let month = today.getMonth() - dob.getMonth();
+      if (month < 0 || (month === 0 && today.getDate() < dob.getDate())) {
+          age--;
+          month += 12;
+      }
+      let day = today.getDate() - dob.getDate();
+      if (day < 0) {
+          month--;
+          day += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+      }
+
+      let result = `You are ${age} years, ${month} months, and ${day} days old.`;
+
+      if (today.getMonth() === dob.getMonth() && today.getDate() === dob.getDate()) {
+          result += " Happy birthday!";
+      }
+
+      document.querySelector(".result").textContent = result;
+    }
+  </script>
+
+</body>
+</html>
